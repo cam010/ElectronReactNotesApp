@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
@@ -65,4 +65,16 @@ app.on('activate', () => {
   }
 })
 
-app.whenReady().then(createWindow)
+
+
+const notes: {id: string, title: string, content: string}[] = []
+
+app.whenReady().then(() => {
+
+    createWindow()
+
+    ipcMain.handle('getNotes', async () => {
+      console.log('Main process received getNotes')
+      return [] // empty notes array
+  })
+})

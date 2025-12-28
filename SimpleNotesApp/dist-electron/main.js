@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -37,7 +37,13 @@ app.on("activate", () => {
     createWindow();
   }
 });
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWindow();
+  ipcMain.handle("getNotes", async () => {
+    console.log("Main process received getNotes");
+    return [];
+  });
+});
 export {
   MAIN_DIST,
   RENDERER_DIST,

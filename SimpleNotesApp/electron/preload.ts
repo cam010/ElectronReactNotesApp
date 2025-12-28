@@ -22,3 +22,10 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   // You can expose other APTs you need here.
   // ...
 })
+
+contextBridge.exposeInMainWorld('api', {
+  getNotes: async () => {
+    return await ipcRenderer.invoke("getNotes")
+  }
+
+})
